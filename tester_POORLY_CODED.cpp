@@ -19,9 +19,9 @@ void func(std::string text, WHICH_PRINT wp, int num_times, int del_milli)
 			//TODO whats wrong with these enormous repetitive blocks of code?
 			for(int k = 0; k < num_times; k++)
 			{
-				//TODO will this ever exit if work == true
+				//TODO will this ever exit if bCancelThreads == true
 				std::this_thread::sleep_for(std::chrono::milliseconds(del_milli));
-				if(work == true)
+				if(bCancelThreads == true)
 					PRINT1(UCTC);
 				else
 					PRINT1(text);
@@ -34,7 +34,7 @@ void func(std::string text, WHICH_PRINT wp, int num_times, int del_milli)
 			for(int k = 0; k < num_times; k++)
 			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(del_milli));
-				if(work == true)
+				if(bCancelThreads == true)
 					PRINT1(UCTC);
 				else
 					PRINT2(text, text);
@@ -47,7 +47,7 @@ void func(std::string text, WHICH_PRINT wp, int num_times, int del_milli)
 			for(int k = 0; k < num_times; k++)
 			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(del_milli));
-				if(work == true)
+				if(bCancelThreads == true)
 					PRINT1(UCTC);
 				else
 					PRINT3(text, text, text);
@@ -60,7 +60,7 @@ void func(std::string text, WHICH_PRINT wp, int num_times, int del_milli)
 			for(int k = 0; k < num_times; k++)
 			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(del_milli));
-				if(work == true)
+				if(bCancelThreads == true)
 					PRINT1(UCTC);
 				else
 					PRINT4(text, text, text, text);
@@ -73,7 +73,7 @@ void func(std::string text, WHICH_PRINT wp, int num_times, int del_milli)
 			for(int k = 0; k < num_times; k++)
 			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(del_milli));
-				if(work == true)
+				if(bCancelThreads == true)
 					PRINT1(UCTC);
 				else
 					PRINT5(text, text, text, text, text);
@@ -90,6 +90,9 @@ void startThreads(std::string s, int numThreads, WHICH_PRINT wp, int numTimesToP
 
 	for(int i = 0;i < numThreads;i++)
 		threads.push_back(thread(func,s,wp,numTimesToPrint,millisecond_delay));
+
+	//TODO did the API say to do this?
+	joinThreads();
 }
 
 //TODO can this be simplified?
@@ -98,9 +101,7 @@ void setCancelThreads(bool bCancel) {
 		bCancelThreads = false;
 	} else {
 		bCancelThreads = true;
-
 	}
-
 }
 
 // TODO what if you call this function twice
